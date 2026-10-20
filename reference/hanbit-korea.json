@@ -1,0 +1,145 @@
+{
+  "id": "hanbit-korea",
+  "title": "Hanbit Korea",
+  "reference": "https://scrollhaus.ai/sites/hanbit-korea/index.html",
+  "preview": "https://media.scrollhaus.ai/previews/hanbit-korea.stream-eb5095fd.mp4",
+  "poster": "https://scrollhaus.ai/thumbs/hanbit-korea.webp",
+  "design": {
+    "tokens": {
+      "--ink": "#0A0B0C",
+      "--ink-soft": "#111314",
+      "--hanji": "#EFE4D2",
+      "--paper": "#FAF7F1",
+      "--celadon": "#9DB5A4",
+      "--persimmon": "#FF6A3D",
+      "--mouse": "#87847E",
+      "--glass": "rgba(255,255,255,.04)",
+      "--glass-line": "rgba(255,255,255,.10)",
+      "--ease": "cubic-bezier(.16,1,.3,1)"
+    },
+    "colors": [
+      "#0A0B0C",
+      "#111314",
+      "#EFE4D2",
+      "#FAF7F1",
+      "#9DB5A4",
+      "#FF6A3D",
+      "#87847E",
+      "#15161a",
+      "#3B382F",
+      "#0C0D0E",
+      "#E8E3DA",
+      "#A8A49C"
+    ],
+    "fonts": [
+      "Inter,system-ui,sans-serif",
+      "Inter",
+      "Instrument Serif,serif",
+      "Oswald"
+    ],
+    "fontStylesheets": [
+      "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Oswald:wght@200..600&family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap"
+    ]
+  },
+  "copy": {
+    "headings": [
+      "KOREA",
+      "About the journey",
+      "Seoul",
+      "Jeonju & Gyeongju",
+      "Busan",
+      "What's included",
+      "Come with us",
+      "Want to come, but still have questions?"
+    ],
+    "body": [
+      "Ten days, moving north to south at walking speed. You'll live in Seoul, Jeonju & Gyeongju, and Busan — a capital that never exhales, two old towns that only exhale, and a port city that smells of salt and grilled eel.",
+      "Routes, tickets, timings, the right queue at the right hour — all of it is already solved. We tell you where to stand, what to order, and when to say nothing at all, so you can just be somewhere.",
+      "Palace courtyards at opening hour, the print shops of Euljiro, a late bowl of noodles under signage older than we are. One dawn hike up Inwangsan.",
+      "A night on a heated floor in a hanok, bibimbap where it was invented, then the Silla tombs and stone pagodas of Gyeongju under falling blossom.",
+      "Jagalchi market at 6am, the painted terraces of Gamcheon, a temple built on the rocks above the sea, and two unplanned days that are yours.",
+      "Two bilingual guides who grew up here — one in Seoul, one in Busan. They know which stall closes at nine and which monk lets you stay for tea.",
+      "Return economy, routed Delhi — Incheon out, Gimhae — Delhi home. No backtracking, no wasted day flying north again.",
+      "Airport pickups, the KTX between cities, and a private van for the mountain mornings when the buses don't run early enough.",
+      "Twin-share rooms, breakfast in, and one night on a heated hanok floor in Jeonju. Every bed within walking distance of somewhere worth walking to.",
+      "Leave a request",
+      "Your name",
+      "Phone number",
+      "Comment",
+      "Send request",
+      "next departures — 28 mar · 11 apr · 17 oct"
+    ]
+  },
+  "frameSequences": [],
+  "assets": [
+    {
+      "role": "Dawn sky over the Korean peninsula",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTHH8_2VKFT08X2D8PAT1D/5647a229-1ef7-4181-b55f-b4bf32bbb0d4.png?w=2200&format=auto&compress=true"
+    },
+    {
+      "role": "Granite ridges of Seoraksan above a sea of cloud at dawn",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTH1W_WVE0JJ5ND4CPE6S6/3cacaf45-6d22-4b58-8a21-dda490f766e0.png?w=2200&format=auto&compress=true"
+    },
+    {
+      "role": "image",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GJA6RE_XEV5MEKT481YNWEJ/ridge-silhouette-web.png?w=2200&format=auto"
+    },
+    {
+      "role": "A woman in hanbok looking out over the valley",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GJKCT1_132NEW0TFFHHXE16/hanbok-figure-web.png?w=760&format=auto"
+    },
+    {
+      "role": "video",
+      "url": "https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838db07a6f8ff298d2f4f/main.mp4"
+    },
+    {
+      "role": "video",
+      "url": "https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838db400e7c181696f346/main.mp4"
+    },
+    {
+      "role": "video",
+      "url": "https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dbae2b40af2a01e26d/main.mp4"
+    },
+    {
+      "role": "video",
+      "url": "https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dc400e7c181696f34c/main.mp4"
+    },
+    {
+      "role": "video",
+      "url": "https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dc400e7c181696f34f/main.mp4"
+    },
+    {
+      "role": "Gyeongbokgung roofs against the Seoul skyline",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV64C_DHXPJ2XKPW0S50CV/5c5a6067-5ac0-42c2-ad31-ae2208ba6386.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "An Euljiro alley at blue hour",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV6G5_HYGYQJA0TJ2NYZ82/b687b95b-be0e-4051-bafd-4044a508560b.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "Tiled roofs of Jeonju Hanok Village",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV6Y3_BX1AC9356R5C8ZS5/b52d08e9-e489-4ed4-9bcb-34558d8ce6d4.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "Celadon tea set on a low table inside a hanok",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV7NM_9C7MXPCJB30SYKHX/9c1d1fd3-6bdf-4606-b019-bb2fa3b6c039.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "Haeundae beach and the Busan skyline at dusk",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV81D_KW5DFA8DQ5YX0TV1/5c21b13c-14e4-4d55-a66a-93ab89219b24.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "Jagalchi fish market at dawn",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV8CB_7V7MA23B34WFZEDW/00e150bc-46f6-4289-b82c-9b8d9357faf7.png?w=560&format=auto&compress=true"
+    },
+    {
+      "role": "Stone pagoda in Gyeongju framed by cherry blossom at sunrise",
+      "url": "https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTJBD_CTSD4PR5KB07QVX5/67d224be-16f4-4d08-a042-2e3a745ec129.png?w=2200&format=auto&compress=true"
+    }
+  ],
+  "notes": {
+    "concept": "A cinematic, scroll-driven landing page for a fictional ten-day curated Korea tour (Seoul → Jeonju & Gyeongju → Busan), built as a single self-contained index.html with zero build step. Every heavy asset — hero plates, hanbok figure cutout, five polaroid video clips, timeline photography, closing cherry-blossom plate — streams through Gumlet (video CDN + image optimisation proxy) from the site's own hosted media, no local asset folder required.",
+    "motion": "The hero's signature move: the outlined \"KOREA\" wordmark sits genuinely behind the mountain ridge line, not just under a straight CSS gradient mask. A real alpha silhouette is keyed out of the ridge photograph (sky plate behind the type, ridge silhouette in front of it, hanbok figure on top), so the letterforms read as standing behind the landscape rather than stamped over it. Below the wordmark, a five-card polaroid strip (Gyeongbokgung, an Euljiro alley, Gamcheon's painted terraces, Korean BBQ, a neon Busan street) drifts left at 0.4x scroll speed, each card's muted video playing at full rate on hover."
+  },
+  "referenceNotes": "HANBIT KOREA — complete build spec\n\nA cinematic, scroll-driven landing page for a fictional ten-day curated Korea tour\n(Seoul → Jeonju & Gyeongju → Busan), built as a single self-contained index.html\nwith zero build step. Every heavy asset — hero plates, hanbok figure cutout, five\npolaroid video clips, timeline photography, closing cherry-blossom plate — streams\nthrough Gumlet (video CDN + image optimisation proxy) from the site's own hosted\nmedia, no local asset folder required.\n\nThe hero's signature move: the outlined \"KOREA\" wordmark sits genuinely behind the\nmountain ridge line, not just under a straight CSS gradient mask. A real alpha\nsilhouette is keyed out of the ridge photograph (sky plate behind the type, ridge\nsilhouette in front of it, hanbok figure on top), so the letterforms read as\nstanding behind the landscape rather than stamped over it. Below the wordmark, a\nfive-card polaroid strip (Gyeongbokgung, an Euljiro alley, Gamcheon's painted\nterraces, Korean BBQ, a neon Busan street) drifts left at 0.4x scroll speed, each\ncard's muted video playing at full rate on hover.\n\nA \"jeong / han / meot / nunchi\" Hangul concept ribbon separates the hero from the\nAbout section. The About timeline reveals three city clusters (Seoul, Jeonju &\nGyeongju, Busan) in sequence via IntersectionObserver, each with two offset,\nslightly rotated photo cards. What's Included is a four-card glass bento grid\nplus an explicit \"not included\" chip row (visas, travel insurance, meals, soju,\nsouvenirs). The closing section is a full-bleed cherry-blossom-and-pagoda plate\nwith a frosted-glass request form.\n\nMotion: Lenis smooth scroll (CDN, duration 1.2, exponential-out easing, degrades\ngracefully if the CDN is blocked), linear scroll-linked hero parallax (ridge and\ntype planes at different speeds, polaroid strip at 0.4x), viewport-triggered\ntimeline stagger, a custom lerped cursor that expands into a ring over interactive\nelements, and per-card hover video playback.\n\nStack: plain static HTML/CSS/vanilla JS. No build step, no framework, no bundler.\n\n## Setup\nCreate one file named index.html with exactly this content and serve it as a\nstatic file (any static server, e.g. `python3 -m http.server`). Needs internet —\nevery image and video streams from Gumlet."
+}

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+  gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',region:['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+  gtag('consent','default',{analytics_storage:'granted',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','GTM-K6FP4GK5');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HANBIT KOREA — Ten Days of Slow Light</title>
+<meta name="description" content="A ten-day curated journey through Seoul, Jeonju &amp; Gyeongju and Busan. Small group, slow pace, no logistics to worry about." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Oswald:wght@200..600&family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+/* Natural source colour; no extra saturation or contrast. */
+canvas, video, figure img, picture img{filter:saturate(1) contrast(1)}
+
+:root{
+  --ink:#0A0B0C;
+  --ink-soft:#111314;
+  --hanji:#EFE4D2;
+  --paper:#FAF7F1;
+  --celadon:#9DB5A4;
+  --persimmon:#FF6A3D;
+  --mouse:#87847E;
+  --glass:rgba(255,255,255,.04);
+  --glass-line:rgba(255,255,255,.10);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  background:var(--ink);color:var(--paper);
+  font-family:'Inter',system-ui,sans-serif;font-weight:300;
+  overflow-x:hidden;
+}
+@media (hover:hover) and (pointer:fine){body{cursor:none}}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--persimmon);color:#0A0B0C}
+
+.caps{font-family:'Inter';text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:400}
+.caps-lg{font-family:'Inter';text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:400}
+.mouse{font-size:10.5px;letter-spacing:.09em;color:var(--mouse);text-transform:lowercase}
+.accent{color:var(--persimmon)}
+.rule{height:1px;background:rgba(255,255,255,.14);flex:1}
+
+/* ---------- cursor ---------- */
+.cursor{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;
+  background:var(--paper);pointer-events:none;z-index:9999;mix-blend-mode:difference;
+  transform:translate(-50%,-50%);transition:width .35s var(--ease),height .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease),border-width .35s var(--ease)}
+.cursor.is-hover{width:34px;height:34px;background:transparent;border:1px solid var(--paper)}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ---------- chrome ---------- */
+.topbar{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+  padding:26px clamp(18px,3.4vw,52px);mix-blend-mode:difference;
+  transition:background .5s var(--ease),backdrop-filter .5s var(--ease),padding .5s var(--ease)}
+.topbar.solid{mix-blend-mode:normal;background:rgba(10,11,12,.62);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-top:18px;padding-bottom:18px;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.wordmark{display:flex;align-items:center;gap:9px}
+.wordmark svg{width:15px;height:15px;opacity:.85}
+.wordmark span{font-family:'Inter';text-transform:uppercase;letter-spacing:.3em;font-size:11.5px;color:#fff}
+.nav{display:flex;gap:30px;align-items:center}
+.nav a{position:relative;color:#fff;padding-bottom:4px}
+.nav a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:#fff;transition:width .5s var(--ease)}
+.nav a:hover::after{width:100%}
+.book-pill{border:1px solid rgba(255,255,255,.6);border-radius:100px;padding:9px 20px;color:#fff;transition:background .4s var(--ease),color .4s var(--ease)}
+.book-pill:hover{background:#fff;color:#000}
+@media(max-width:820px){.nav{display:none}}
+
+.social{position:fixed;right:clamp(14px,2.2vw,26px);top:50%;transform:translateY(-50%);z-index:55;
+  display:flex;flex-direction:column;gap:18px;mix-blend-mode:difference}
+.social a{opacity:.5;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.social a:hover{opacity:1;transform:translateX(-3px)}
+.social svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:1.1}
+@media(max-width:820px){.social{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;background:#0A0B0C}
+.plane{position:absolute;inset:0;will-change:transform}
+.sky{z-index:1}
+.sky img{width:100%;height:118%;object-fit:cover;object-position:center top}
+.sky::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,12,.5) 0%,rgba(10,11,12,0) 34%)}
+
+.typeplane{z-index:3;display:flex;justify-content:center;align-items:flex-end;padding-bottom:24vh}
+.korea{
+  font-family:'Instrument Serif',serif;font-weight:400;line-height:.78;
+  font-size:clamp(96px,26.5vw,470px);letter-spacing:.01em;
+  color:transparent;-webkit-text-stroke:1.4px rgba(34,28,24,.70);
+  transform:scaleY(1.26);transform-origin:bottom center;white-space:nowrap;
+}
+
+/* the photograph (sky + cloud sea) sits BELOW the wordmark */
+.ridge{z-index:2;top:auto;bottom:0;height:80vh}
+.ridge img{width:100%;height:100%;object-fit:cover;object-position:center 74%}
+.ridge{
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.45) 6%,#000 15%);
+          mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.45) 6%,#000 15%);
+}
+/* the keyed silhouette — identical geometry, stacked ABOVE the wordmark so the
+   real ridge contour crops the letterforms */
+.ridge-sil{z-index:5;top:auto;bottom:0;height:80vh;pointer-events:none}
+.ridge-sil img{width:100%;height:100%;object-fit:cover;object-position:center 74%}
+.ridge-sil::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,11,12,0) 46%,rgba(10,11,12,.72) 100%)}
+
+.figure{z-index:6;top:auto;bottom:3vh;right:clamp(6px,5.5vw,104px);left:auto;
+  width:clamp(180px,19vw,300px);height:auto;pointer-events:none}
+.figure img{width:100%;height:auto;filter:contrast(1) saturate(1) brightness(.96);
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.45)) contrast(1) saturate(1) brightness(.96)}
+@media(max-width:820px){.figure{right:1vw;width:38vw;bottom:2vh;opacity:.94}}
+
+/* polaroid strip */
+.strip{position:absolute;z-index:7;left:clamp(18px,3.4vw,52px);bottom:clamp(30px,5vh,62px);
+  display:flex;gap:16px;will-change:transform}
+.pola{position:relative;width:clamp(108px,10.6vw,152px);flex:0 0 auto;
+  background:linear-gradient(180deg,rgba(239,228,210,.94),rgba(239,228,210,.86));
+  padding:8px 8px 30px;border-radius:2px;box-shadow:0 14px 34px rgba(0,0,0,.45);
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.pola video{width:100%;aspect-ratio:3/4;object-fit:cover;background:#15161a;filter:saturate(.94) contrast(1.03)}
+.pola figcaption{position:absolute;left:10px;bottom:9px;color:#3B382F;font-size:9.5px;letter-spacing:.06em}
+.pola:nth-child(odd){transform:rotate(-1.4deg)}
+.pola:nth-child(even){transform:rotate(1.1deg)}
+.pola:hover{transform:translateY(-8px) rotate(0deg) scale(1.025);box-shadow:0 26px 48px rgba(255,106,61,.24)}
+@media(max-width:700px){.strip{gap:10px;left:14px;bottom:20px}.pola{width:88px;padding:5px 5px 22px}.pola figcaption{font-size:8px;left:6px;bottom:6px}}
+
+.scrollhint{position:absolute;z-index:6;right:clamp(52px,7vw,120px);bottom:34px;text-align:right}
+@media(max-width:820px){.scrollhint{display:none}}
+
+/* ---------- marquee ---------- */
+.ribbon{border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);
+  overflow:hidden;background:#0C0D0E;padding:16px 0}
+.ribbon-track{display:flex;gap:44px;white-space:nowrap;width:max-content;animation:slide 38s linear infinite}
+@keyframes slide{to{transform:translateX(-50%)}}
+.ribbon-track span{font-family:'Oswald';font-weight:200;text-transform:uppercase;letter-spacing:.2em;font-size:13px;color:rgba(239,228,210,.55)}
+.ribbon-track span i{font-style:normal;color:var(--persimmon);margin-right:12px}
+
+/* ---------- sections ---------- */
+section{position:relative}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(18px,3.4vw,52px)}
+.sec-head{display:flex;align-items:center;gap:26px;padding:clamp(70px,11vh,130px) 0 clamp(34px,5vh,60px)}
+.sec-head h2{font-family:'Oswald';font-weight:200;text-transform:uppercase;
+  font-size:clamp(30px,5.6vw,86px);letter-spacing:.02em;line-height:.96}
+.sec-num{font-family:'Oswald';font-weight:300;font-size:12px;letter-spacing:.24em;color:var(--persimmon);padding-top:10px}
+
+.about{display:grid;grid-template-columns:1fr 1.06fr;gap:clamp(30px,6vw,96px);padding-bottom:clamp(60px,10vh,130px)}
+@media(max-width:940px){.about{grid-template-columns:1fr}}
+.lede{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(20px,2.1vw,29px);line-height:1.45;color:#E8E3DA}
+.lede + .lede{margin-top:26px}
+.lede em{font-style:normal;color:var(--persimmon)}
+.about-meta{margin-top:44px;display:flex;gap:40px;flex-wrap:wrap}
+.about-meta div span{display:block}
+.about-meta .k{font-family:'Oswald';font-weight:300;font-size:26px;letter-spacing:.04em;color:var(--hanji)}
+
+/* timeline */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,.14)}
+.stop{position:relative;padding-bottom:clamp(44px,7vh,86px);opacity:0;transform:translateY(40px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.stop.in{opacity:1;transform:none}
+.stop::before{content:'';position:absolute;left:-44px;top:9px;width:8px;height:8px;border-radius:50%;
+  background:var(--persimmon);box-shadow:0 0 0 5px rgba(255,106,61,.14)}
+.stop h3{font-family:'Oswald';font-weight:300;text-transform:uppercase;letter-spacing:.12em;font-size:clamp(15px,1.5vw,19px)}
+.stop .days{color:var(--celadon);letter-spacing:.2em;font-size:10.5px;text-transform:uppercase;margin-bottom:7px}
+.stop p{margin-top:9px;font-size:13.5px;line-height:1.65;color:#A8A49C;max-width:44ch}
+.cluster{margin-top:20px;display:flex;gap:14px}
+.cluster figure{width:clamp(120px,15vw,196px);background:var(--paper);padding:7px 7px 9px;
+  box-shadow:0 16px 34px rgba(0,0,0,.5);transition:transform .55s var(--ease)}
+.cluster figure:first-child{transform:rotate(-2.6deg)}
+.cluster figure:last-child{transform:rotate(2.2deg) translateY(12px)}
+.cluster img{aspect-ratio:4/5;object-fit:cover;width:100%}
+.cluster figure figcaption{color:#5E5A52;font-size:8.5px;letter-spacing:.09em;padding-top:6px;text-transform:uppercase}
+.cluster:hover figure:first-child{transform:rotate(-6deg) translate(-8px,-6px)}
+.cluster:hover figure:last-child{transform:rotate(6deg) translate(8px,4px)}
+
+/* included */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:clamp(20px,4vh,40px)}
+@media(max-width:1040px){.bento{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.bento{grid-template-columns:1fr}}
+.card{position:relative;background:var(--glass);border:1px solid var(--glass-line);border-radius:14px;
+  padding:26px 24px 30px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;
+  transition:transform .45s var(--ease),border-color .45s var(--ease),background .45s var(--ease)}
+.card::after{content:'';position:absolute;inset:auto -30% -60% -30%;height:70%;
+  background:radial-gradient(50% 100% at 50% 100%,rgba(255,106,61,.20),transparent 70%);opacity:0;transition:opacity .5s var(--ease)}
+.card:hover{transform:translateY(-5px);border-color:rgba(255,106,61,.55);background:rgba(255,255,255,.055)}
+.card:hover::after{opacity:1}
+.card svg{width:22px;height:22px;stroke:var(--persimmon);fill:none;stroke-width:1.2;transition:transform .45s var(--ease)}
+.card:hover svg{transform:scale(1.12)}
+.card h4{margin:20px 0 10px;font-weight:400}
+.card p{font-size:13px;line-height:1.62;color:#A8A49C}
+.card .idx{position:absolute;top:22px;right:24px;font-family:'Oswald';font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.22)}
+.notincl{display:flex;gap:10px;flex-wrap:wrap;padding:6px 0 clamp(70px,11vh,130px)}
+.notincl span{border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:7px 15px;color:#7E7A73;font-size:11px;letter-spacing:.06em}
+
+/* contact */
+.contact{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.contact .bg{position:absolute;inset:0;z-index:0}
+.contact .bg img{width:100%;height:100%;object-fit:cover}
+.contact .bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(10,11,12,.80) 0%,rgba(10,11,12,.45) 48%,rgba(10,11,12,.18) 100%)}
+.form-panel{position:relative;z-index:2;width:min(470px,100%);margin:clamp(80px,12vh,140px) 0;
+  background:rgba(16,17,19,.52);border:1px solid rgba(255,255,255,.14);border-radius:18px;
+  padding:clamp(28px,3vw,42px);backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);
+  box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.form-panel h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(24px,2.7vw,34px);line-height:1.22}
+.form-panel .sub{margin-top:16px;color:var(--celadon)}
+.field{margin-top:26px}
+.field label{display:block;color:#7E7A73;font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:9px}
+.field input,.field textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.2);
+  color:var(--paper);font-family:'Inter';font-weight:300;font-size:14.5px;padding:8px 0;outline:none;
+  transition:border-color .4s var(--ease)}
+.field textarea{resize:none;height:62px}
+.field input:focus,.field textarea:focus{border-color:var(--persimmon)}
+.send{margin-top:34px;width:100%;border:0;border-radius:100px;padding:16px;background:var(--paper);color:#0A0B0C;
+  font-family:'Inter';font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:none;
+  transition:background .4s var(--ease),color .4s var(--ease),transform .4s var(--ease)}
+.send:hover{background:var(--persimmon);color:#120A06;transform:translateY(-2px)}
+.form-note{margin-top:16px;text-align:center}
+
+footer{border-top:1px solid rgba(255,255,255,.1);background:#08090A}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:26px;padding:34px 0;flex-wrap:wrap}
+.foot .nav a{color:#A8A49C}
+.foot .nav a::after{background:#A8A49C}
+.foot-social svg{stroke:#6F6C66}
+.foot-social{display:flex;gap:16px}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal,.stop{opacity:1!important;transform:none!important}
+}
+</style>
+<link rel="canonical" href="https://scrollhaus.ai/sites/hanbit-korea/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://scrollhaus.ai/sites/hanbit-korea/#webpage","url":"https://scrollhaus.ai/sites/hanbit-korea/","name":"Hanbit Korea — Scrollhaus website preview","isPartOf":{"@type":"WebSite","@id":"https://scrollhaus.ai/#website","url":"https://scrollhaus.ai/","name":"Scrollhaus"},"publisher":{"@type":"Organization","@id":"https://scrollhaus.ai/#organization","name":"Scrollhaus","url":"https://scrollhaus.ai/"}}</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6FP4GK5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="cursor" id="cursor"></div>
+
+<header class="topbar">
+  <a class="wordmark" href="#top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.1"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+    <span>Hanbit Korea</span>
+  </a>
+  <nav class="nav caps">
+    <a href="#about">About</a>
+    <a href="#included">Included</a>
+    <a href="#contact">Contacts</a>
+    <a class="book-pill caps" href="#contact">Book</a>
+  </nav>
+</header>
+
+<div class="social">
+  <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="#fff" stroke="none"/></svg></a>
+  <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4.5h-3c-2 0-3.4 1.4-3.4 3.4V10H8v3.5h2.6V21h3.5v-7.5H17L17.4 10h-3.3V8.4c0-.3.2-.4.9-.4z"/></svg></a>
+  <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21 4.5 2.8 11.3l5.4 1.7L10 20l3.1-4 4.6 3.1z"/><path d="M8.2 13 21 4.5l-9 9.6"/></svg></a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="plane sky" data-speed="0.14">
+    <img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTHH8_2VKFT08X2D8PAT1D/5647a229-1ef7-4181-b55f-b4bf32bbb0d4.png?w=2200&format=auto&compress=true" alt="Dawn sky over the Korean peninsula">
+  </div>
+
+  <div class="plane ridge" data-speed="0.10">
+    <img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTH1W_WVE0JJ5ND4CPE6S6/3cacaf45-6d22-4b58-8a21-dda490f766e0.png?w=2200&format=auto&compress=true" alt="Granite ridges of Seoraksan above a sea of cloud at dawn">
+  </div>
+
+  <div class="plane typeplane" data-speed="0.42">
+    <h1 class="korea">KOREA</h1>
+  </div>
+
+  <div class="plane ridge-sil" data-speed="0.10">
+    <img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GJA6RE_XEV5MEKT481YNWEJ/ridge-silhouette-web.png?w=2200&format=auto" alt="">
+  </div>
+
+  <div class="plane figure">
+    <img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GJKCT1_132NEW0TFFHHXE16/hanbok-figure-web.png?w=760&format=auto" alt="A woman in hanbok looking out over the valley">
+  </div>
+
+  <div class="strip" id="strip">
+    <figure class="pola" data-hover>
+      <video src="https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838db07a6f8ff298d2f4f/main.mp4" muted loop playsinline preload="metadata"></video>
+      <figcaption>3 cities in korea</figcaption>
+    </figure>
+    <figure class="pola" data-hover>
+      <video src="https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838db400e7c181696f346/main.mp4" muted loop playsinline preload="metadata"></video>
+      <figcaption>10 slow days</figcaption>
+    </figure>
+    <figure class="pola" data-hover>
+      <video src="https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dbae2b40af2a01e26d/main.mp4" muted loop playsinline preload="metadata"></video>
+      <figcaption>gigabytes of photos</figcaption>
+    </figure>
+    <figure class="pola" data-hover>
+      <video src="https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dc400e7c181696f34c/main.mp4" muted loop playsinline preload="metadata"></video>
+      <figcaption>eat until you can't</figcaption>
+    </figure>
+    <figure class="pola" data-hover>
+      <video src="https://video.gumlet.io/6a7e9e0f2621db881577453e/6aa838dc400e7c181696f34f/main.mp4" muted loop playsinline preload="metadata"></video>
+      <figcaption>stay out late</figcaption>
+    </figure>
+  </div>
+
+  <div class="scrollhint mouse">scroll — 10 days, 3 cities</div>
+</section>
+
+<div class="ribbon">
+  <div class="ribbon-track">
+    <span><i>정</i>jeong — the warmth between people</span>
+    <span><i>한</i>han — the ache under the beauty</span>
+    <span><i>멋</i>meot — style you cannot buy</span>
+    <span><i>눈치</i>nunchi — reading the room</span>
+    <span><i>정</i>jeong — the warmth between people</span>
+    <span><i>한</i>han — the ache under the beauty</span>
+    <span><i>멋</i>meot — style you cannot buy</span>
+    <span><i>눈치</i>nunchi — reading the room</span>
+  </div>
+</div>
+
+<!-- ============ 01 ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2>About the journey</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="about">
+      <div class="reveal">
+        <p class="lede">Ten days, moving north to south at walking speed. You'll live in <em>Seoul, Jeonju &amp; Gyeongju, and Busan</em> — a capital that never exhales, two old towns that only exhale, and a port city that smells of salt and grilled eel.</p>
+        <p class="lede">Routes, tickets, timings, the right queue at the right hour — all of it is already solved. We tell you where to stand, what to order, and when to say nothing at all, so you can just <em>be somewhere</em>.</p>
+        <div class="about-meta">
+          <div><span class="k">10</span><span class="mouse">days, door to door</span></div>
+          <div><span class="k">14</span><span class="mouse">travellers, maximum</span></div>
+          <div><span class="k">2</span><span class="mouse">bilingual guides</span></div>
+          <div><span class="k">1</span><span class="mouse">night in a hanok</span></div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <article class="stop" data-delay="0">
+          <div class="days">days 1 — 3</div>
+          <h3>Seoul</h3>
+          <p>Palace courtyards at opening hour, the print shops of Euljiro, a late bowl of noodles under signage older than we are. One dawn hike up Inwangsan.</p>
+          <div class="cluster">
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV64C_DHXPJ2XKPW0S50CV/5c5a6067-5ac0-42c2-ad31-ae2208ba6386.png?w=560&format=auto&compress=true" alt="Gyeongbokgung roofs against the Seoul skyline"><figcaption>Gyeongbokgung</figcaption></figure>
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV6G5_HYGYQJA0TJ2NYZ82/b687b95b-be0e-4051-bafd-4044a508560b.png?w=560&format=auto&compress=true" alt="An Euljiro alley at blue hour"><figcaption>Euljiro, 21:40</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="stop" data-delay="200">
+          <div class="days">days 4 — 6</div>
+          <h3>Jeonju &amp; Gyeongju</h3>
+          <p>A night on a heated floor in a hanok, bibimbap where it was invented, then the Silla tombs and stone pagodas of Gyeongju under falling blossom.</p>
+          <div class="cluster">
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV6Y3_BX1AC9356R5C8ZS5/b52d08e9-e489-4ed4-9bcb-34558d8ce6d4.png?w=560&format=auto&compress=true" alt="Tiled roofs of Jeonju Hanok Village"><figcaption>Hanok rooftops</figcaption></figure>
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV7NM_9C7MXPCJB30SYKHX/9c1d1fd3-6bdf-4606-b019-bb2fa3b6c039.png?w=560&format=auto&compress=true" alt="Celadon tea set on a low table inside a hanok"><figcaption>Morning tea</figcaption></figure>
+          </div>
+        </article>
+
+        <article class="stop" data-delay="400">
+          <div class="days">days 7 — 10</div>
+          <h3>Busan</h3>
+          <p>Jagalchi market at 6am, the painted terraces of Gamcheon, a temple built on the rocks above the sea, and two unplanned days that are yours.</p>
+          <div class="cluster">
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV81D_KW5DFA8DQ5YX0TV1/5c21b13c-14e4-4d55-a66a-93ab89219b24.png?w=560&format=auto&compress=true" alt="Haeundae beach and the Busan skyline at dusk"><figcaption>Haeundae, dusk</figcaption></figure>
+            <figure><img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHV8CB_7V7MA23B34WFZEDW/00e150bc-46f6-4289-b82c-9b8d9357faf7.png?w=560&format=auto&compress=true" alt="Jagalchi fish market at dawn"><figcaption>Jagalchi, 06:10</figcaption></figure>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 INCLUDED ============ -->
+<section id="included">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2>What's included</h2>
+      <span class="rule"></span>
+    </div>
+
+    <div class="bento">
+      <div class="card reveal" data-hover>
+        <span class="idx">01</span>
+        <svg viewBox="0 0 24 24"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <h4>Guides</h4>
+        <p>Two bilingual guides who grew up here — one in Seoul, one in Busan. They know which stall closes at nine and which monk lets you stay for tea.</p>
+      </div>
+      <div class="card reveal" data-hover>
+        <span class="idx">02</span>
+        <svg viewBox="0 0 24 24"><path d="M2 14l20-7-7 20-3-8z"/><path d="M12 19l-2-5"/></svg>
+        <h4>Flights</h4>
+        <p>Return economy, routed Delhi — Incheon out, Gimhae — Delhi home. No backtracking, no wasted day flying north again.</p>
+      </div>
+      <div class="card reveal" data-hover>
+        <span class="idx">03</span>
+        <svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10" rx="2.4"/><circle cx="7.5" cy="19" r="1.6"/><circle cx="16.5" cy="19" r="1.6"/><path d="M2.5 12h19"/></svg>
+        <h4>Transfers</h4>
+        <p>Airport pickups, the KTX between cities, and a private van for the mountain mornings when the buses don't run early enough.</p>
+      </div>
+      <div class="card reveal" data-hover>
+        <span class="idx">04</span>
+        <svg viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+        <h4>Stays</h4>
+        <p>Twin-share rooms, breakfast in, and one night on a heated hanok floor in Jeonju. Every bed within walking distance of somewhere worth walking to.</p>
+      </div>
+    </div>
+
+    <div class="notincl reveal">
+      <span class="mouse" style="border:0;padding-left:0">not included —</span>
+      <span>visas</span><span>travel insurance</span><span>lunches &amp; dinners</span><span>the second bottle of soju</span><span>souvenirs you will absolutely buy</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="bg">
+    <img src="https://hanbitkorea.gumlet.io/fetch/https://pub.hyperagent.com/api/published/pbf01M2GHTJBD_CTSD4PR5KB07QVX5/67d224be-16f4-4d08-a042-2e3a745ec129.png?w=2200&format=auto&compress=true" alt="Stone pagoda in Gyeongju framed by cherry blossom at sunrise">
+  </div>
+  <div class="wrap" style="position:relative;z-index:2;width:100%">
+    <div class="sec-head reveal" style="padding-bottom:0">
+      <span class="sec-num">03</span>
+      <h2 style="font-size:clamp(24px,3vw,46px)">Come with us</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="form-panel reveal">
+      <h3>Want to come, but still have questions?</h3>
+      <p class="sub caps-lg">Leave a request</p>
+      <form onsubmit="event.preventDefault();this.querySelector('.send').textContent='Sent — we reply within a day';">
+        <div class="field"><label for="n">Your name</label><input id="n" type="text" placeholder="이름 / name" required></div>
+        <div class="field"><label for="p">Phone number</label><input id="p" type="tel" placeholder="+91" required></div>
+        <div class="field"><label for="c">Comment</label><textarea id="c" placeholder="When are you thinking of going?"></textarea></div>
+        <button class="send" type="submit" data-hover>Send request</button>
+      </form>
+      <p class="form-note mouse">next departures — 28 mar · 11 apr · 17 oct</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="wordmark" href="#top" style="filter:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#EFE4D2" stroke-width="1.1"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+        <span style="color:#EFE4D2">Hanbit Korea</span>
+      </a>
+      <nav class="nav caps" style="display:flex">
+        <a href="#top">Home</a><a href="#about">About</a><a href="#included">Included</a><a href="#contact">Contacts</a>
+      </nav>
+      <div class="foot-social social" style="position:static;transform:none;flex-direction:row;mix-blend-mode:normal">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4.5h-3c-2 0-3.4 1.4-3.4 3.4V10H8v3.5h2.6V21h3.5v-7.5H17L17.4 10h-3.3V8.4c0-.3.2-.4.9-.4z"/></svg></a>
+        <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24"><path d="M21 4.5 2.8 11.3l5.4 1.7L10 20l3.1-4 4.6 3.1z"/></svg></a>
+      </div>
+      <span class="mouse">media streamed &amp; optimised by gumlet</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Lenis smooth scroll ---------- */
+let lenis = null;
+if (!reduce && window.Lenis) {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    smoothTouch: false
+  });
+  window.__lenis = lenis;
+  const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+  requestAnimationFrame(raf);
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: 0 }); }
+    });
+  });
+}
+
+/* ---------- hero parallax (scroll-linked, linear) ---------- */
+const hero   = document.querySelector('.hero');
+const planes = [...document.querySelectorAll('.hero .plane[data-speed]')];
+const strip  = document.getElementById('strip');
+planes.forEach(p => p.style.willChange = 'transform');
+if (strip) strip.style.willChange = 'transform';
+
+function parallax() {
+  if (reduce) return;
+  const h = hero.offsetHeight;
+  const p = Math.min(Math.max(window.scrollY / h, 0), 1.2);
+  planes.forEach(el => {
+    el.style.transform = `translate3d(0,${-(p * h * parseFloat(el.dataset.speed))}px,0)`;
+  });
+  if (strip) strip.style.transform = `translate3d(${-(p * window.innerWidth * 0.40)}px,0,0)`;
+}
+const topbar = document.querySelector('.topbar');
+function chrome() { topbar.classList.toggle('solid', window.scrollY > window.innerHeight * 0.8); }
+let ticking = false;
+const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { parallax(); chrome(); ticking = false; }); } };
+if (lenis) lenis.on('scroll', onScroll); else window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', parallax);
+parallax();
+
+/* ---------- viewport reveals + timeline stagger ---------- */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const delay = parseInt(el.dataset.delay || 0, 10);
+    setTimeout(() => el.classList.add('in'), delay);
+    io.unobserve(el);
+  });
+}, { threshold: 0.3, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal, .stop').forEach(el => io.observe(el));
+
+/* ---------- polaroid video: play on hover, pause otherwise ---------- */
+document.querySelectorAll('.pola').forEach(card => {
+  const v = card.querySelector('video');
+  v.playbackRate = 0.85;
+  card.addEventListener('mouseenter', () => { v.playbackRate = 1; v.play().catch(() => {}); });
+  card.addEventListener('mouseleave', () => { v.pause(); });
+});
+/* autoplay the strip softly once the hero is visible on touch devices */
+if (window.matchMedia('(hover:none)').matches) {
+  document.querySelectorAll('.pola video').forEach(v => { v.autoplay = true; v.play().catch(() => {}); });
+}
+
+/* ---------- custom cursor ---------- */
+const cursor = document.getElementById('cursor');
+if (window.innerWidth > 768 && window.matchMedia('(hover:hover)').matches) {
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function loop() {
+    cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+    cursor.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(loop);
+  })();
+  const hoverables = 'a, button, .pola, .card, input, textarea, [data-hover]';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('is-hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('is-hover'));
+  });
+} else if (cursor) { cursor.style.display = 'none'; }
+</script>
+</body>
+</html>
