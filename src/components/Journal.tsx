@@ -1,15 +1,157 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { assets } from '../lib/assets';
 import { Media } from './Media';
 
-const stories = [
-  { title: 'Seoul', sub: 'THE ENERGY OF CONTRAST', text: 'Palace courtyards at opening hour, the print shops of Euljiro, a late bowl of noodles under signage older than we are. One dawn hike up Inwangsan.', edit: 'Structure, softened. Meet the city edit.', category: 'Outerwear' },
-  { title: 'Jeonju & Gyeongju', sub: 'A SLOWER KIND OF BEAUTY', text: 'A night on a heated floor in a hanok, bibimbap where it was invented, then the Silla tombs and stone pagodas of Gyeongju under falling blossom.', edit: 'Easy layers, made for a slower pace.', category: 'Knitwear' },
-  { title: 'Busan', sub: 'WHERE THE CITY EXHALES', text: 'Jagalchi market at 6am, the painted terraces of Gamcheon, a temple built on the rocks above the sea, and two unplanned days that are yours.', edit: 'Room to move. Discover everyday essentials.', category: 'Essentials' },
+export interface RegionalGarment {
+  country: string;
+  garment: string;
+  role: string;
+  image: string;
+  caption: string;
+  badge: string;
+}
+
+export interface RegionalStudy {
+  num: string;
+  sub: string;
+  region: string;
+  title: string;
+  text: string;
+  edit: string;
+  category: string;
+  garments: [RegionalGarment, RegionalGarment];
+}
+
+const studies: RegionalStudy[] = [
+  {
+    num: '01',
+    sub: 'REGIONAL STUDY 01 — EAST ASIA',
+    region: 'South Korea & Japan',
+    title: 'Hanbok & Kimono',
+    text: 'South Korea’s Hanbok (한복) features flowing jeogori and billowed chima skirts designed to celebrate natural body curves and ceremonial ease. In parallel, Japan’s Kimono (着物) and Obi showcase straight-line geometry, noble woven silks, and centuries of meditative artisanal textile discipline.',
+    edit: 'Explore fluid silhouettes & dresses',
+    category: 'Dresses',
+    garments: [
+      {
+        country: 'South Korea',
+        garment: 'Hanbok (한복)',
+        role: 'Traditional Korean Hanbok silk dress with flowing chima silhouette',
+        image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
+        caption: 'SOUTH KOREA / HANBOK SILK DRAPE',
+        badge: 'SOUTH KOREA',
+      },
+      {
+        country: 'Japan',
+        garment: 'Kimono & Obi (着物)',
+        role: 'Traditional Japanese hand-woven silk Kimono and ceremonial Obi',
+        image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
+        caption: 'JAPAN / CEREMONIAL WOVEN KIMONO',
+        badge: 'JAPAN',
+      },
+    ],
+  },
+  {
+    num: '02',
+    sub: 'REGIONAL STUDY 02 — SOUTH ASIA & NORTH AFRICA',
+    region: 'India & Morocco',
+    title: 'Sari & Djellaba',
+    text: 'India’s handloom Mulberry silk Sari (साड़ी) spans six to nine continuous yards of unstitched silk woven with metallic zari, worn across wedding rituals and daily elegance. Morocco’s hooded Djellaba (جلابة) and silk caftans provide breathable, protective volume tailored for Atlas Mountain winds and Mediterranean breezes.',
+    edit: 'Discover noble weaves & tops',
+    category: 'Tops',
+    garments: [
+      {
+        country: 'India',
+        garment: 'Banarasi & Kanjeevaram Sari (साड़ी)',
+        role: 'Authentic Indian handloom silk sari with gold zari borders',
+        image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
+        caption: 'INDIA / HANDLOOM ZARI SILK SARI',
+        badge: 'INDIA',
+      },
+      {
+        country: 'Morocco',
+        garment: 'Djellaba & Caftan (جلابة)',
+        role: 'Moroccan hooded wool and linen djellaba with artisan braided trim',
+        image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80',
+        caption: 'MOROCCO / ATLAS DESERT DJELLABA',
+        badge: 'MOROCCO',
+      },
+    ],
+  },
+  {
+    num: '03',
+    sub: 'REGIONAL STUDY 03 — EUROPE & UK',
+    region: 'Scotland & France',
+    title: 'Highland Tartan & Haute Couture',
+    text: 'Scotland’s resilient worsted wool Tartan kilts and heavy tweed doublets were engineered to withstand rugged Atlantic coastal mists while denoting ancestral clan pride. Across the Channel, Parisian Haute Couture elevated architectural shoulder canvassing, razor-sharp lapels, and timeless monochrome luxury.',
+    edit: 'Curate tailored outerwear & knitwear',
+    category: 'Outerwear',
+    garments: [
+      {
+        country: 'Scotland (UK)',
+        garment: 'Highland Worsted Wool Tartan',
+        role: 'Scottish highland pleated tartan kilt woven from pure heritage wool',
+        image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80',
+        caption: 'SCOTLAND / HIGHLAND CLAN TARTAN',
+        badge: 'SCOTLAND, UK',
+      },
+      {
+        country: 'France',
+        garment: 'Parisian Haute Couture Tailoring',
+        role: 'French architectural bespoke tailored eveningwear in fine wool crepe',
+        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
+        caption: 'FRANCE / PARISIAN ATELIER COUTURE',
+        badge: 'FRANCE',
+      },
+    ],
+  },
 ];
+
 export function Journal() {
-  return <section id="journal" className="journal section-pad"><div className="section-heading" data-reveal><div><p className="eyebrow"><span className="orange-dot" /> FIELD NOTES FROM KOREA</p><h2>Somewhere between<br /><em>a place and a feeling.</em></h2></div><p className="section-aside">The places behind the pieces.<br />A journey from north to south.</p></div>
-    <div className="journal-grid">{stories.map((story, i) => <article key={story.title} className="journal-story" data-reveal><div className="journal-photos"><figure><Media src={assets.cities[i * 2].url} alt={assets.cities[i * 2].role} loading="lazy" /><figcaption>35° — 37° N / SOUTH KOREA</figcaption></figure><figure><Media src={assets.cities[i * 2 + 1].url} alt={assets.cities[i * 2 + 1].role} loading="lazy" /><figcaption>ORIVELLE FIELD NOTES / 0{i + 1}</figcaption></figure></div><div className="journal-number"><span>0{i + 1}</span><span>{story.sub}</span></div><h3>{story.title}</h3><p>{story.text}</p><Link to={`/shop?category=${encodeURIComponent(story.category)}`} className="text-link">{story.edit} <ArrowUpRight size={16} /></Link></article>)}</div>
-  </section>;
+  return (
+    <section id="journal" className="journal section-pad">
+      <div className="section-heading" data-reveal>
+        <div>
+          <p className="eyebrow"><span className="orange-dot" /> ATELIER FIELD NOTES · GLOBAL SARTORIAL ARCHIVE</p>
+          <h2>World Attire &amp;<br /><em>Regional Cloth Heritage.</em></h2>
+        </div>
+        <p className="section-aside">
+          A study of iconic garments from different regions of the world—<br />
+          celebrating the fabrics, lineages, and cultures that wear them.
+        </p>
+      </div>
+
+      <div className="journal-grid">
+        {studies.map((study) => (
+          <article key={study.title} className="journal-story" data-reveal>
+            <div className="journal-photos">
+              {study.garments.map((g, idx) => (
+                <figure key={g.country} title={`${g.garment} — Worn in ${g.country}`}>
+                  <Media src={g.image} alt={`${g.garment} from ${g.country} — ${g.role}`} loading="lazy" />
+                  <span className="journal-country-badge">{g.badge}</span>
+                  <figcaption>{g.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="journal-number">
+              <span>{study.num}</span>
+              <span>{study.sub}</span>
+            </div>
+
+            <div className="journal-region-tag">
+              <Globe size={13} />
+              <span>{study.region}</span>
+            </div>
+
+            <h3>{study.title}</h3>
+            <p>{study.text}</p>
+
+            <Link to={`/shop?category=${encodeURIComponent(study.category)}`} className="text-link">
+              {study.edit} <ArrowUpRight size={16} />
+            </Link>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
 }

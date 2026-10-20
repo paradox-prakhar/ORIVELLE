@@ -14,7 +14,7 @@
     "typecheck": "tsc -b",
     "preview": "vite preview --host 127.0.0.1",
     "start": "tsx server/index.ts",
-    "test": "tsx --test tests/server*.test.ts",
+    "test": "tsx --test tests/*.test.ts",
     "admin:create": "tsx server/create-admin.ts"
   },
   "dependencies": {

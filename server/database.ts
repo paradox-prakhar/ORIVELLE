@@ -38,13 +38,14 @@ export function createDatabase(filename = process.env.DATABASE_PATH || 'data/han
   // Preserve custom identities and every existing customer, inventory and order record.
   const storedSettings = JSON.parse(String((db.prepare('SELECT data FROM settings WHERE id=1').get() as { data: string }).data)) as Settings;
   if (['HANBIT', 'Hanbit'].includes(storedSettings.storeName)) db.prepare('UPDATE settings SET data=? WHERE id=1').run(JSON.stringify({ ...storedSettings, storeName: defaultSettings.storeName }));
-  db.prepare("UPDATE products SET name='Orivelle Silk Scarf' WHERE name='Hanbit Silk Scarf' AND demo=1").run();
+  db.prepare("UPDATE products SET name='Orivelle Silk Scarf' WHERE name='Hanbit Silk Scarf'").run();
   const orderColumns = db.prepare('PRAGMA table_info(orders)').all() as { name: string }[];
   if (!orderColumns.some(column => column.name === 'coupon_id')) {
     db.exec('ALTER TABLE orders ADD COLUMN coupon_id TEXT REFERENCES coupons(id)');
     db.exec('UPDATE orders SET coupon_id=(SELECT id FROM coupons WHERE coupons.code=orders.coupon) WHERE coupon IS NOT NULL');
   }
   if (process.env.SEED_DEMO !== 'false') seedCatalog(db);
+  if (process.env.SEED_DEMO !== 'false' && filename !== ':memory:') ensureAtelierProducts(db);
   return db;
 }
 
@@ -77,3 +78,30 @@ export function transaction<T>(db: Db, action: () => T): T {
   try { const value = action(); db.exec('COMMIT'); return value; }
   catch (error) { db.exec('ROLLBACK'); throw error; }
 }
+
+function ensureAtelierProducts(db: Db) {
+  const pieces = [
+    ['sculpted-wool-trench', 'Sculpted Wool Trench', 'Outerwear', 1450000, 'Oat Camel', '100% Virgin Wool Twill', 'An architectural double-faced wool trench with generous raglan sleeves, storm flap, and a relaxed belted waist. Fluid unlined drape for effortless seasonal movement.', 'https://images.unsplash.com/photo-1683393092542-74689e4b8367?auto=format&fit=crop&w=1600&q=80'],
+    ['tailored-wool-overcoat', 'Tailored Wool Overcoat', 'Outerwear', 1680000, 'Charcoal Melange', 'Heavy Italian Worsted Wool', 'A clean-lined minimalist overcoat cut from heavyweight Italian wool. Features sharp notch lapels, genuine horn buttons, deep welt pockets, and an unhurried straight silhouette.', 'https://images.unsplash.com/photo-1787436025288-874f0696fcca?auto=format&fit=crop&w=1600&q=80'],
+    ['spun-cashmere-rib', 'Spun Cashmere Rib Sweater', 'Knitwear', 980000, 'Ecru Cream', 'Combed Cashmere & Mulberry Silk', 'Whisper-soft ribbed knit spun from premium combed cashmere and mulberry silk. Features a relaxed funnel collar, dropped shoulder seams, and effortless lightweight warmth.', 'https://images.unsplash.com/photo-1625795550960-9558411bae05?auto=format&fit=crop&w=1600&q=80'],
+    ['relaxed-wool-blazer', 'Relaxed Wool Blazer', 'Tops', 1220000, 'Slate Ink', 'Breathable Wool-Linen Blend', 'An unstructured tailored blazer crafted from breathable Belgian wool-linen weave. Soft natural shoulders, patch pockets, and twin rear vents for daily ease.', 'https://images.unsplash.com/photo-1453396450673-3fe83d2db2c4?auto=format&fit=crop&w=1600&q=80'],
+    ['sandwashed-silk-dress', 'Sandwashed Silk Dress', 'Dresses', 1150000, 'Desert Stone', '100% Pure Mulberry Silk', 'A fluid bias-cut midi dress cut from sandwashed mulberry silk with a soft matte luster. Drapes naturally along the body line with delicate seam finishing.', 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1600&q=80'],
+  ] as const;
+
+  const insertProduct = db.prepare('INSERT OR IGNORE INTO products(id,slug,name,description,category,price,compare_at,images,color,material,care,featured,active,demo,created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+  const insertVariant = db.prepare('INSERT OR IGNORE INTO variants VALUES (?,?,?,?,?,?)');
+  const sizes = ['XS', 'S', 'M', 'L', 'XL'];
+
+  transaction(db, () => {
+    for (const [index, row] of pieces.entries()) {
+      const [slug, name, category, price, color, material, description, image] = row;
+      const id = `product-${slug}`;
+      insertProduct.run(id, slug, name, `${description} Demonstration product. Campaign photography is illustrative and does not depict this exact item.`, category, price, null, JSON.stringify([image]), color, material, 'Demonstration care guidance; follow the final garment label.', 1, 1, 1, new Date(Date.UTC(2026, 9, 10 + index)).toISOString());
+      for (const [n, size] of sizes.entries()) {
+        const sku = `ORI-${slug.slice(0, 3).toUpperCase()}-${size}`;
+        insertVariant.run(`${slug}-${size.toLowerCase()}`, id, sku, size, color, 8 + n * 2);
+      }
+    }
+  });
+}
+

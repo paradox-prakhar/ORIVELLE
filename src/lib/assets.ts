@@ -65,3 +65,70 @@ export const referenceAssets = [
   }
 ] as const;
 export const assets = { sky: referenceAssets[0].url, ridge: referenceAssets[1].url, silhouette: referenceAssets[2].url, figure: referenceAssets[3].url, videos: referenceAssets.slice(4, 9).map(a => a.url), cities: referenceAssets.slice(9, 15), closing: referenceAssets[15].url, campaign: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1600&q=80", preview: "https://media.scrollhaus.ai/previews/hanbit-korea.stream-eb5095fd.mp4", poster: "https://scrollhaus.ai/thumbs/hanbit-korea.webp" };
+
+export interface ClothingPiece {
+  id: string;
+  slug: string;
+  tag: 'WOMEN' | 'MEN';
+  title: string;
+  fabric: string;
+  description: string;
+  image: string;
+  category: string;
+}
+
+export const clothingPieces: ClothingPiece[] = [
+  {
+    id: 'women-wool-trench',
+    slug: 'sculpted-wool-trench',
+    tag: 'WOMEN',
+    title: 'Sculpted Wool Trench',
+    fabric: '100% Virgin Wool Twill',
+    description: 'Generous raglan sleeves, storm flap, and fluid unlined drape.',
+    image: 'https://images.unsplash.com/photo-1683393092542-74689e4b8367?auto=format&fit=crop&w=800&q=80',
+    category: 'Outerwear',
+  },
+  {
+    id: 'men-tailored-coat',
+    slug: 'tailored-wool-overcoat',
+    tag: 'MEN',
+    title: 'Tailored Wool Overcoat',
+    fabric: 'Heavy Italian Worsted Wool',
+    description: 'Clean notch lapel, natural horn buttons, and straight unhurried cut.',
+    image: 'https://images.unsplash.com/photo-1787436025288-874f0696fcca?auto=format&fit=crop&w=800&q=80',
+    category: 'Outerwear',
+  },
+  {
+    id: 'women-cashmere-knit',
+    slug: 'spun-cashmere-rib',
+    tag: 'WOMEN',
+    title: 'Spun Cashmere Rib',
+    fabric: 'Combed Cashmere & Silk',
+    description: 'Whisper-soft ribbed knit designed for lightweight seasonal warmth.',
+    image: 'https://images.unsplash.com/photo-1625795550960-9558411bae05?auto=format&fit=crop&w=800&q=80',
+    category: 'Knitwear',
+  },
+  {
+    id: 'men-linen-blazer',
+    slug: 'relaxed-wool-blazer',
+    tag: 'MEN',
+    title: 'Relaxed Wool Blazer',
+    fabric: 'Breathable Wool-Linen Weave',
+    description: 'Unstructured shoulder with patch pockets for effortless daily elegance.',
+    image: 'https://images.unsplash.com/photo-1453396450673-3fe83d2db2c4?auto=format&fit=crop&w=800&q=80',
+    category: 'Tops',
+  },
+  {
+    id: 'women-silk-dress',
+    slug: 'sandwashed-silk-dress',
+    tag: 'WOMEN',
+    title: 'Sandwashed Silk Dress',
+    fabric: '100% Pure Mulberry Silk',
+    description: 'Fluid bias-cut drape with a soft natural matte sheen and ease of movement.',
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80',
+    category: 'Dresses',
+  },
+];
+
+
+export const campaignBackdrop = "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=2000&q=80";

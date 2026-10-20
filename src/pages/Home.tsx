@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, PackageCheck, ScanLine, MoveUpRight, Sprout } from 'lucide-react';
 import { Hero } from '../components/Hero';
 import { Collection } from '../components/Collection';
+import { LatestArrivals } from '../components/LatestArrivals';
 import { Editorial } from '../components/Editorial';
 import { Journal } from '../components/Journal';
 import { Newsletter } from '../components/Newsletter';
@@ -13,7 +14,7 @@ export default function Home() {
   const ref = useRef<HTMLDivElement>(null);
   useReveal(ref);
   useAmbientMotion(ref);
-  return <div ref={ref} className="home"><Hero /><div data-ambient className="concept-ribbon" aria-label="Jeong connection, Han depth, Meot style, Nunchi awareness"><div className="concept-track">{[0, 1, 2].map(i => <span key={i} aria-hidden={i > 0}><b>정</b> JEONG — CONNECTION <i>✳</i><b>한</b> HAN — DEPTH <i>✳</i><b>멋</b> MEOT — STYLE <i>✳</i><b>눈치</b> NUNCHI — AWARENESS <i>✳</i></span>)}</div></div><Collection /><Editorial /><Journal />
+  return <div ref={ref} className="home"><Hero /><div data-ambient className="concept-ribbon" aria-label="Luxury quiet elegance, Style modern drape, Premium noble fibres, Atelier bespoke tailoring, Heritage ready-to-wear"><div className="concept-track">{[0, 1, 2].map(i => <span key={i} aria-hidden={i > 0}><b>LUXURY</b> QUIET ELEGANCE & COUTURE FINISH <i>✳</i><b>STYLE</b> ARCHITECTURAL CUT & MODERN DRAPE <i>✳</i><b>PREMIUM</b> VIRGIN WOOL, CASHMERE & MULBERRY SILK <i>✳</i><b>ATELIER</b> BESPOKE TAILORING & HAND-FINISHED SEAMS <i>✳</i><b>HERITAGE</b> CONTEMPORARY READY-TO-WEAR SENSE <i>✳</i></span>)}</div></div><Collection /><LatestArrivals /><Editorial /><Journal />
     <section className="values section-pad"><div className="values-heading"><p className="eyebrow">THE DETAILS MAKE THE DIFFERENCE</p><h2>Considered, <em>from the start.</em></h2></div><div className="values-grid">{[
       { icon: ScanLine, title: 'Know your piece', text: 'Fabric, fit, and care details on every product. A little more clarity before you choose.', link: '/shop' },
       { icon: Sprout, title: 'Wear. Care. Repeat.', text: 'Simple ways to look after the pieces you love, season after season.', link: '/policies/care' },

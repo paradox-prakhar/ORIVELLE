@@ -1,15 +1,17 @@
 .reading-progress { height:2px; position:fixed; top:0; left:0; right:0; z-index:100; transform:scaleX(0); transform-origin:left; background:#bb8965; pointer-events:none; }
+.polaroid-frame>.media { display:block; width:100%; height:100%; }
 .brand-symbol { font-family:'Instrument Serif',serif; font-size:38px; color:#ccb095; }
 .brand-korean { font-size:7px; letter-spacing:.2em; }
 .hero-line { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }
 .hero-line>span,.hero-line>em { display:block; }
-.hero-campaign { position:absolute; top:23%; right:8.5%; width:27%; max-width:390px; padding:15px 18px 25px; z-index:8; }
-.hero-campaign-card { aspect-ratio:3/3.9; width:100%; padding:7px 7px 0; background:#e8e0d2; box-shadow:0 35px 65px #0005; will-change:transform; }
+.hero-campaign { position:absolute; top:clamp(170px, 20vh, 220px); right:6.5%; width:23%; max-width:320px; padding:10px 12px 18px; z-index:8; }
+.hero-copy { top:clamp(170px, 20vh, 220px); }
+.hero-campaign-card { aspect-ratio:3/3.7; width:100%; padding:6px 6px 0; background:#e8e0d2; box-shadow:0 35px 65px #0005; will-change:transform; }
 .hero-campaign-card>a { display:flex; flex-direction:column; height:100%; }
 .hero-campaign-card .media { flex:1; min-height:0; }
 .hero-campaign-card img { object-fit:cover; }
 .campaign-card-caption { display:flex; align-items:center; justify-content:space-between; flex-shrink:0; height:36px; padding:0 5px; font-size:7px; letter-spacing:.11em; color:#514c43; }
-.campaign-side-label { position:absolute; right:-8px; top:20px; writing-mode:vertical-rl; font-size:7px; letter-spacing:.19em; color:#ccc0ae; }
+.campaign-side-label { position:absolute; right:-22px; top:42px; writing-mode:vertical-rl; font-size:7px; letter-spacing:.22em; color:#ccc0ae; opacity:.85; }
 .hero-caption { top:auto; bottom:95px; }
 .hero-caption>p { font-size:25px; }
 .motion-control { display:inline-flex; align-items:center; gap:7px; background:none; border:0; padding:8px 0; color:inherit; font-size:7px; letter-spacing:.12em; }
@@ -62,7 +64,7 @@
   .hero-copy { top:176px; }
   .hero-copy h1 { font-size:59px; }
   .hero-copy .eyebrow { font-size:7px; }
-  .hero-campaign { top:490px; width:225px; right:50%; translate:50% 0; padding:0; max-width:none; }
+  .hero-campaign { top:490px; width:225px; left:calc(50% - 112.5px); right:auto; padding:0; max-width:none; }
   .hero-campaign-card { aspect-ratio:3/3.65; }
   .campaign-side-label { right:-19px; top:8px; font-size:6px; }
   .campaign-card-caption { height:30px; font-size:5px; }
@@ -74,7 +76,9 @@
   .hero-media-note { bottom:9px; }
   .footer-bottom .motion-control { font-size:7px; }
 }
-@media(max-width:370px) { .hero-copy h1 { font-size:52px; } .brand { font-size:17px; } .hero-campaign { width:210px; } }
+@media(max-width:370px) { .hero-copy h1 { font-size:52px; } .brand { font-size:17px; } .hero-campaign { width:210px; left:calc(50% - 105px); } }
+.inner-page>.c-page { padding-top:65px; }
+@media(max-width:767px) { .inner-page>.c-page { padding-top:48px; } }
 [data-motion="off"] *,[data-motion="off"] *:before,[data-motion="off"] *:after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
 [data-motion="off"] [data-reveal] { opacity:1!important; transform:none!important; }
 [data-motion="off"] .custom-cursor { display:none; }

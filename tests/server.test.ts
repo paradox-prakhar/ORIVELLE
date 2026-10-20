@@ -17,6 +17,22 @@ type OrderResponse = { order: Order };
 type SavedAddress = Address & { id: string; isDefault: boolean };
 
 const origin = 'http://localhost:5173';
+test('disabling demo seeding leaves a new persistent store empty', () => {
+  const directory = mkdtempSync(join(tmpdir(), 'orivelle-empty-'));
+  const previous = process.env.SEED_DEMO;
+  let empty: Db | undefined;
+  try {
+    process.env.SEED_DEMO = 'false';
+    empty = createDatabase(join(directory, 'empty.sqlite'));
+    assert.equal((empty.prepare('SELECT COUNT(*) AS count FROM products').get() as {count:number}).count, 0);
+  } finally {
+    empty?.close();
+    if (previous === undefined) delete process.env.SEED_DEMO; else process.env.SEED_DEMO = previous;
+    const target = resolvePath(directory);
+    assert.ok(target.startsWith(resolvePath(tmpdir()) + '\\') || target.startsWith(resolvePath(tmpdir()) + '/'));
+    rmSync(target, { recursive: true, force: true });
+  }
+});
 let server: Server;
 let db: Db;
 let base: string;

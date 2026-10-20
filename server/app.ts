@@ -12,6 +12,7 @@ import { addCartItem, changeOrderStatus, checkout, coupon, couponIssue, getCart,
 import { authenticate, context, logout, originProtection, rateLimit, requireUser, sessionMiddleware } from './security.js';
 import { addressSchema, email, name, password, quantity } from './validation.js';
 import { adminRouter } from './admin.js';
+import { getLatestProducts } from './shopify.js';
 
 export interface AppOptions { db?: Db; databasePath?: string; origins?: string[]; production?: boolean; passwordCost?: number; serveFrontend?: boolean }
 export function createApp(options: AppOptions = {}) {
@@ -54,6 +55,16 @@ export function createApp(options: AppOptions = {}) {
     const data = z.object({ rating: z.number().int().min(1).max(5), body: z.string().trim().min(10).max(2000) }).parse(req.body);
     if (!one(db, "SELECT oi.id FROM order_items oi JOIN orders o ON o.id=oi.order_id WHERE o.user_id=? AND oi.product_id=? AND o.status='delivered'", userId, item.id)) throw new ApiError(403, 'Reviews are available after a verified order has been delivered.', 'PURCHASE_REQUIRED');
     const id = randomUUID(); db.prepare('INSERT INTO reviews VALUES (?,?,?,?,?,?)').run(id, item.id, userId, data.rating, data.body, now()); res.status(201).json({ id, ...data });
+  });
+
+  app.get('/api/shopify/latest-products', async (_req, res) => {
+    try {
+      const data = await getLatestProducts();
+      res.json(data);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Failed to fetch latest products from Shopify';
+      res.status(502).json({ error: message, products: [] });
+    }
   });
 
   const authRate = rateLimit(15, 15 * 60000);
