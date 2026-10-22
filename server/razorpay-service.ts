@@ -22,7 +22,8 @@ export function getRazorpayConfig(): RazorpayConfig {
   const keySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
   const webhookSecret = (process.env.RAZORPAY_WEBHOOK_SECRET || 'test_webhook_secret_key_12345678').trim();
 
-  const isConfigured = Boolean(keyId && keySecret && !keyId.includes('placeholder') && !keySecret.includes('placeholder'));
+  const isPlaceholder = keyId.includes('placeholder') || keyId.includes('your_key_id') || keySecret.includes('placeholder') || keySecret.includes('your_key_secret');
+  const isConfigured = Boolean(keyId && keySecret && !isPlaceholder);
   const isTestMode = !isConfigured || keyId.startsWith('rzp_test_');
 
   return {
@@ -45,8 +46,8 @@ export async function createRazorpayOrder(
 ): Promise<{ id: string; amount: number; currency: string; receipt: string }> {
   const config = getRazorpayConfig();
 
-  // If actual Razorpay credentials provided (not the fallback test key)
-  if (!config.isTestMode && config.keyId !== 'rzp_test_simulated_key') {
+  // If actual Razorpay credentials are provided (works for both rzp_test_ and rzp_live_ keys)
+  if (config.enabled && config.keyId !== 'rzp_test_simulated_key') {
     try {
       const auth = Buffer.from(`${config.keyId}:${config.keySecret}`).toString('base64');
       const response = await fetch('https://api.razorpay.com/v1/orders', {
@@ -64,15 +65,18 @@ export async function createRazorpayOrder(
       });
 
       if (!response.ok) {
-        const errorBody = await response.json().catch(() => ({}));
-        throw new Error(`Razorpay API error: ${response.status} ${JSON.stringify(errorBody)}`);
+        const errorBody = (await response.json().catch(() => ({}))) as { error?: { description?: string; code?: string } };
+        const desc = errorBody?.error?.description || `HTTP ${response.status} ${response.statusText}`;
+        console.error('Razorpay API error:', response.status, errorBody);
+        throw new Error(`Razorpay error: ${desc}`);
       }
 
       const data = await response.json() as { id: string; amount: number; currency: string; receipt: string };
       return data;
     } catch (err: unknown) {
       console.error('Failed to communicate with Razorpay API:', err);
-      throw new ApiError(502, 'Failed to create payment order with gateway. Please try again.', 'PAYMENT_GATEWAY_ERROR');
+      const detail = err instanceof Error ? err.message : 'Unknown gateway error';
+      throw new ApiError(502, `Razorpay payment initialization failed (${detail}). Verify RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env.local.`, 'PAYMENT_GATEWAY_ERROR');
     }
   }
 

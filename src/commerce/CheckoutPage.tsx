@@ -176,6 +176,12 @@ export function CheckoutPage() {
             },
           },
         });
+        rzp.on('payment.failed', (resp: unknown) => {
+          const failure = resp as { error?: { description?: string; reason?: string } } | undefined;
+          setBusy(false);
+          setPaymentStep('failed');
+          setError(failure?.error?.description || 'Payment was unsuccessful. Please check your payment details and retry.');
+        });
         rzp.open();
       } else {
         // Safe simulation path for testing environments without external network or credentials
