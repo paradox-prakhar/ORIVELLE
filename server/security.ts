@@ -20,7 +20,7 @@ export function issueSession(db: Db, res: Response, userId: string | null, produ
 export function sessionMiddleware(db: Db, production: boolean): RequestHandler {
   let requests = 0;
   return (req, res, next) => {
-    if ((['GET', 'HEAD'].includes(req.method) && /^\/(?:products(?:\/|$)|config$|health$)/.test(req.path)) || req.path === '/newsletter') return next();
+    if ((['GET', 'HEAD'].includes(req.method) && /^\/(?:products(?:\/|$)|config$|health$)/.test(req.path)) || req.path === '/newsletter' || req.path.startsWith('/webhooks/')) return next();
     const token = req.cookies?.[cookieName] as string | undefined;
     const id = token && /^[a-zA-Z0-9_-]{43}$/.test(token) ? hashToken(token) : '';
     const session = id ? one(db, 'SELECT * FROM sessions WHERE id=? AND expires_at>?', id, Date.now()) : undefined;
@@ -61,7 +61,7 @@ export const requireAdmin: RequestHandler = (_req, res, next) => context(res).us
 export function originProtection(origins: string[]): RequestHandler {
   const allowed = new Set(origins);
   return (req, _res, next) => {
-    if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+    if (['GET', 'HEAD', 'OPTIONS'].includes(req.method) || req.path.startsWith('/webhooks/')) return next();
     const origin = req.get('origin');
     if (!origin || !allowed.has(origin) || req.get('sec-fetch-site') === 'cross-site') return next(new ApiError(403, 'This request must come from the store website.', 'ORIGIN_REJECTED'));
     const hasBody = req.headers['transfer-encoding'] !== undefined || Number(req.get('content-length') || 0) > 0;

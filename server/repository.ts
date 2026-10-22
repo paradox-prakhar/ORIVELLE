@@ -9,7 +9,7 @@ export const one = (db: Db, sql: string, ...values: SQLInputValue[]) => db.prepa
 export const many = (db: Db, sql: string, ...values: SQLInputValue[]) => db.prepare(sql).all(...values) as Row[];
 export const now = () => new Date().toISOString();
 export function settings(db: Db): Settings { return JSON.parse(String(one(db, 'SELECT data FROM settings WHERE id=1')!.data)) as Settings; }
-export function safeUser(row: Row): User { return { id: String(row.id), name: String(row.name), email: String(row.email), role: row.role as User['role'], createdAt: String(row.created_at) }; }
+export function safeUser(row: Row): User { return { id: String(row.id), name: String(row.name), email: String(row.email), role: row.role as User['role'], emailVerified: Boolean(row.email_verified), createdAt: String(row.created_at) }; }
 export function variant(row: Row): Variant { return { id: String(row.id), sku: String(row.sku), size: String(row.size), color: String(row.color), stock: Number(row.stock) }; }
 export function product(db: Db, row: Row): Product {
   const images = JSON.parse(String(row.images)) as string[];

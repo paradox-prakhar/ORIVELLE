@@ -1,0 +1,467 @@
+// Prisma Schema for ORIVELLE Atelier
+// Production-grade PostgreSQL schema for E-Commerce Authentication,
+// Checkout Sessions, Payment Security, Inventory Reservations, and Order Management.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum CheckoutSessionStatus {
+  CREATED
+  VALIDATING
+  PAYMENT_PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  EXPIRED
+  CANCELLED
+  REQUIRES_RECONCILIATION
+}
+
+enum PaymentProvider {
+  RAZORPAY
+  COD
+}
+
+enum PaymentAttemptStatus {
+  INITIATED
+  ATTEMPTED
+  CAPTURED
+  FAILED
+  CANCELLED
+  REQUIRES_RECONCILIATION
+}
+
+enum OrderStatus {
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum ReservationStatus {
+  ACTIVE
+  FINALIZED
+  RELEASED
+  EXPIRED
+}
+
+enum WebhookEventStatus {
+  RECEIVED
+  PROCESSED
+  FAILED
+  IGNORED
+}
+
+model User {
+  id                    String                 @id @default(uuid())
+  name                  String
+  email                 String                 @unique
+  passwordHash          String                 @map("password_hash")
+  role                  Role                   @default(CUSTOMER)
+  emailVerified         Boolean                @default(false) @map("email_verified")
+  createdAt             DateTime               @default(now()) @map("created_at")
+  updatedAt             DateTime               @updatedAt @map("updated_at")
+
+  sessions              AuthSession[]
+  addresses             Address[]
+  orders                Order[]
+  checkoutSessions      CheckoutSession[]
+  passwordResetTokens   PasswordResetToken[]
+  emailVerifyTokens     EmailVerificationToken[]
+  reviews               Review[]
+  returnRequests        ReturnRequest[]
+  auditLogs             AuditLog[]             @relation("ActorAuditLogs")
+
+  @@map("users")
+}
+
+model AuthSession {
+  id         String   @id // SHA-256 hash of the session token
+  userId     String?  @map("user_id")
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model PasswordResetToken {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  tokenHash  String   @unique @map("token_hash")
+  expiresAt  DateTime @map("expires_at")
+  usedAt     DateTime? @map("used_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
+
+model EmailVerificationToken {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  tokenHash  String   @unique @map("token_hash")
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("email_verification_tokens")
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  name       String
+  phone      String
+  line1      String
+  city       String
+  state      String
+  pincode    String
+  isDefault  Boolean  @default(false) @map("is_default")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("addresses")
+}
+
+model Product {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String
+  description String
+  category    String
+  price       Int       // Stored in paise (integer minor unit)
+  compareAt   Int?      @map("compare_at")
+  images      Json
+  color       String
+  material    String
+  care        String
+  featured    Boolean   @default(false)
+  active      Boolean   @default(true)
+  demo        Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  variants    Variant[]
+  reviews     Review[]
+
+  @@index([category])
+  @@index([active])
+  @@map("products")
+}
+
+model Variant {
+  id           String                 @id @default(uuid())
+  productId    String                 @map("product_id")
+  sku          String                 @unique
+  size         String
+  color        String
+  stock        Int                    @default(0)
+
+  product      Product                @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cartItems    CartItem[]
+  orderItems   OrderItem[]
+  reservations InventoryReservation[]
+
+  @@index([productId])
+  @@map("variants")
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  owner     String   // "user:<id>" or "guest:<session_id>"
+  variantId String   @map("variant_id")
+  quantity  Int
+
+  variant   Variant  @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([owner, variantId])
+  @@index([owner])
+  @@map("cart_items")
+}
+
+model Coupon {
+  id          String    @id @default(uuid())
+  code        String    @unique
+  percent     Int       // 1 - 90 %
+  minSubtotal Int       @default(0) @map("min_subtotal") // in paise
+  active      Boolean   @default(true)
+  uses        Int       @default(0)
+  usageLimit  Int?      @map("usage_limit")
+  expiresAt   DateTime? @map("expires_at")
+
+  orders      Order[]
+
+  @@map("coupons")
+}
+
+model CheckoutSession {
+  id                String                @id @default(uuid())
+  userId            String                @map("user_id")
+  idempotencyKey    String                @unique @map("idempotency_key")
+  status            CheckoutSessionStatus @default(CREATED)
+  subtotal          Int                   // in paise
+  discount          Int                   @default(0) // in paise
+  shipping          Int                   @default(0) // in paise
+  tax               Int                   @default(0) // in paise
+  total             Int                   // in paise
+  currency          String                @default("INR")
+  itemsSnapshot     Json                  @map("items_snapshot")
+  shippingAddress   Json                  @map("shipping_address")
+  couponId          String?               @map("coupon_id")
+  couponCode        String?               @map("coupon_code")
+  paymentProvider   PaymentProvider       @default(RAZORPAY) @map("payment_provider")
+  providerOrderId   String?               @map("provider_order_id")
+  orderId           String?               @unique @map("order_id")
+  expiresAt         DateTime              @map("expires_at")
+  createdAt         DateTime              @default(now()) @map("created_at")
+  updatedAt         DateTime              @updatedAt @map("updated_at")
+
+  user              User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order             Order?                @relation(fields: [orderId], references: [id])
+  paymentAttempts   PaymentAttempt[]
+  reservations      InventoryReservation[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([providerOrderId])
+  @@index([expiresAt])
+  @@map("checkout_sessions")
+}
+
+model InventoryReservation {
+  id                String            @id @default(uuid())
+  checkoutSessionId String            @map("checkout_session_id")
+  variantId         String            @map("variant_id")
+  quantity          Int
+  status            ReservationStatus @default(ACTIVE)
+  expiresAt         DateTime          @map("expires_at")
+  createdAt         DateTime          @default(now()) @map("created_at")
+
+  checkoutSession   CheckoutSession   @relation(fields: [checkoutSessionId], references: [id], onDelete: Cascade)
+  variant           Variant           @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@index([checkoutSessionId])
+  @@index([variantId])
+  @@index([status, expiresAt])
+  @@map("inventory_reservations")
+}
+
+model PaymentAttempt {
+  id                String               @id @default(uuid())
+  checkoutSessionId String               @map("checkout_session_id")
+  orderId           String?              @map("order_id")
+  provider          PaymentProvider      @default(RAZORPAY)
+  providerOrderId   String               @map("provider_order_id")
+  providerPaymentId String?              @map("provider_payment_id")
+  providerSignature String?              @map("provider_signature")
+  amount            Int                  // in paise
+  currency          String               @default("INR")
+  status            PaymentAttemptStatus @default(INITIATED)
+  errorCode         String?              @map("error_code")
+  errorDescription  String?              @map("error_description")
+  rawResponse       Json?                @map("raw_response")
+  idempotencyKey    String               @map("idempotency_key")
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @updatedAt @map("updated_at")
+
+  checkoutSession   CheckoutSession      @relation(fields: [checkoutSessionId], references: [id], onDelete: Cascade)
+  order             Order?               @relation(fields: [orderId], references: [id])
+
+  @@index([checkoutSessionId])
+  @@index([providerOrderId])
+  @@index([providerPaymentId])
+  @@index([status])
+  @@map("payment_attempts")
+}
+
+model PaymentEvent {
+  id                String             @id @default(uuid())
+  eventId           String             @unique @map("event_id") // Provider's event identifier (e.g. Razorpay event id)
+  eventType         String             @map("event_type")
+  provider          PaymentProvider    @default(RAZORPAY)
+  payload           Json
+  signatureVerified Boolean            @default(false) @map("signature_verified")
+  status            WebhookEventStatus @default(RECEIVED)
+  error             String?
+  processedAt       DateTime?          @map("processed_at")
+  createdAt         DateTime           @default(now()) @map("created_at")
+
+  @@index([eventType])
+  @@index([status])
+  @@map("payment_events")
+}
+
+model IdempotencyRecord {
+  id             String   @id @default(uuid())
+  key            String
+  scope          String   // e.g. "user:<userId>:checkout" or "payment:<sessionId>"
+  requestHash    String   @map("request_hash")
+  status         String   // "processing" | "completed" | "failed"
+  responseStatus Int?     @map("response_status")
+  responseBody   String?  @map("response_body")
+  expiresAt      DateTime @map("expires_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@unique([scope, key])
+  @@index([expiresAt])
+  @@map("idempotency_records")
+}
+
+model Order {
+  id              String            @id @default(uuid())
+  reference       String            @unique
+  userId          String            @map("user_id")
+  checkoutSessionId String?         @unique @map("checkout_session_id")
+  idempotencyKey  String            @map("idempotency_key")
+  address         Json
+  subtotal        Int               // in paise
+  discount        Int               @default(0) // in paise
+  shipping        Int               @default(0) // in paise
+  tax             Int               @default(0) // in paise
+  total           Int               // in paise
+  couponId        String?           @map("coupon_id")
+  couponCode      String?           @map("coupon_code")
+  status          OrderStatus       @default(CONFIRMED)
+  paymentProvider PaymentProvider   @default(RAZORPAY) @map("payment_provider")
+  paymentStatus   PaymentStatus     @default(PENDING) @map("payment_status")
+  trackingNumber  String?           @map("tracking_number")
+  trackingUrl     String?           @map("tracking_url")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+
+  user            User              @relation(fields: [userId], references: [id])
+  coupon          Coupon?           @relation(fields: [couponId], references: [id])
+  checkoutSession CheckoutSession?
+  items           OrderItem[]
+  events          OrderEvent[]
+  paymentAttempts PaymentAttempt[]
+  returnRequest   ReturnRequest?
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId])
+  @@index([status])
+  @@index([paymentStatus])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String  @map("order_id")
+  productId String  @map("product_id")
+  variantId String  @map("variant_id")
+  name      String
+  slug      String
+  image     String
+  size      String
+  color     String
+  sku       String
+  quantity  Int
+  price     Int     // unit price at purchase time in paise
+
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variant   Variant @relation(fields: [variantId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model OrderEvent {
+  id        String   @id @default(uuid())
+  orderId   String   @map("order_id")
+  actorId   String?  @map("actor_id")
+  event     String
+  details   Json
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_events")
+}
+
+model ReturnRequest {
+  id        String   @id @default(uuid())
+  orderId   String   @unique @map("order_id")
+  userId    String   @map("user_id")
+  reason    String
+  status    String   @default("requested")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("return_requests")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  productId String   @map("product_id")
+  userId    String   @map("user_id")
+  rating    Int
+  body      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, userId])
+  @@map("reviews")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String?  @map("actor_id")
+  action    String
+  targetId  String   @map("target_id")
+  details   Json
+  createdAt DateTime @default(now()) @map("created_at")
+
+  actor     User?    @relation("ActorAuditLogs", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([action])
+  @@map("audit_log")
+}
+
+model OutboxEvent {
+  id          String    @id @default(uuid())
+  eventType   String    @map("event_type")
+  payload     Json
+  status      String    @default("pending") // pending | processed | failed
+  retryCount  Int       @default(0) @map("retry_count")
+  processedAt DateTime? @map("processed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([status])
+  @@map("outbox_events")
+}

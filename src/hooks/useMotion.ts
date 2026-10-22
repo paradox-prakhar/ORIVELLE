@@ -59,9 +59,28 @@ export function useReveal(ref: RefObject<HTMLElement | null>) {
   useEffect(() => {
     const root = ref.current;
     if (!root) return;
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting)), { threshold: 0.12 });
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting)),
+      { threshold: 0.08 }
+    );
     root.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
+
+    const mutObserver = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node instanceof HTMLElement) {
+            if (node.hasAttribute('data-reveal')) observer.observe(node);
+            node.querySelectorAll?.('[data-reveal]').forEach(el => observer.observe(el));
+          }
+        }
+      }
+    });
+    mutObserver.observe(root, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutObserver.disconnect();
+    };
   }, [ref]);
 }
 
