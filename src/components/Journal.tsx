@@ -1,4 +1,4 @@
-import { ArrowUpRight, Globe } from 'lucide-react';
+import { ArrowUpRight, Globe, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Media } from './Media';
 
@@ -9,6 +9,7 @@ export interface RegionalGarment {
   image: string;
   caption: string;
   badge: string;
+  slug: string;
 }
 
 export interface RegionalStudy {
@@ -39,6 +40,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
         caption: 'SOUTH KOREA / HANBOK SILK DRAPE',
         badge: 'SOUTH KOREA',
+        slug: 'korean-hanbok-silk-dress',
       },
       {
         country: 'Japan',
@@ -47,6 +49,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
         caption: 'JAPAN / CEREMONIAL WOVEN KIMONO',
         badge: 'JAPAN',
+        slug: 'ceremonial-woven-kimono',
       },
     ],
   },
@@ -66,6 +69,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80',
         caption: 'INDIA / HANDLOOM ZARI SILK SARI',
         badge: 'INDIA',
+        slug: 'banarasi-zari-silk-sari',
       },
       {
         country: 'Morocco',
@@ -74,6 +78,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=800&q=80',
         caption: 'MOROCCO / ATLAS DESERT DJELLABA',
         badge: 'MOROCCO',
+        slug: 'moroccan-artisan-djellaba',
       },
     ],
   },
@@ -93,6 +98,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=800&q=80',
         caption: 'SCOTLAND / HIGHLAND CLAN TARTAN',
         badge: 'SCOTLAND, UK',
+        slug: 'highland-worsted-wool-tartan',
       },
       {
         country: 'France',
@@ -101,6 +107,7 @@ const studies: RegionalStudy[] = [
         image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
         caption: 'FRANCE / PARISIAN ATELIER COUTURE',
         badge: 'FRANCE',
+        slug: 'parisian-couture-blazer',
       },
     ],
   },
@@ -114,21 +121,33 @@ export function Journal() {
           <p className="eyebrow"><span className="orange-dot" /> ATELIER FIELD NOTES · GLOBAL SARTORIAL ARCHIVE</p>
           <h2>World Attire &amp;<br /><em>Regional Cloth Heritage.</em></h2>
         </div>
-        <p className="section-aside">
-          A study of iconic garments from different regions of the world—<br />
-          celebrating the fabrics, lineages, and cultures that wear them.
-        </p>
+        <div className="journal-header-right">
+          <p className="section-aside">
+            A study of iconic garments from different regions of the world—<br />
+            celebrating the fabrics, lineages, and cultures that wear them.
+          </p>
+          <Link to="/shop" className="text-link journal-header-link">
+            Explore entire heritage archive <ArrowUpRight size={16} />
+          </Link>
+        </div>
       </div>
 
       <div className="journal-grid">
         {studies.map((study) => (
           <article key={study.title} className="journal-story" data-reveal>
             <div className="journal-photos">
-              {study.garments.map((g, idx) => (
-                <figure key={g.country} title={`${g.garment} — Worn in ${g.country}`}>
-                  <Media src={g.image} alt={`${g.garment} from ${g.country} — ${g.role}`} loading="lazy" />
-                  <span className="journal-country-badge">{g.badge}</span>
-                  <figcaption>{g.caption}</figcaption>
+              {study.garments.map((g) => (
+                <figure key={g.country} className="journal-polaroid" title={`Click to follow up and shop ${g.garment}`}>
+                  <Link to={`/product/${g.slug}`} className="journal-polaroid-link" aria-label={`View and shop ${g.garment} from ${g.country}`}>
+                    <div className="journal-polaroid-img-wrap">
+                      <Media src={g.image} alt={`${g.garment} from ${g.country} — ${g.role}`} loading="lazy" />
+                      <span className="journal-country-badge">{g.badge}</span>
+                      <span className="journal-shop-pill">
+                        Follow Up Piece <ArrowUpRight size={10} />
+                      </span>
+                    </div>
+                    <figcaption>{g.caption}</figcaption>
+                  </Link>
                 </figure>
               ))}
             </div>
@@ -145,6 +164,26 @@ export function Journal() {
 
             <h3>{study.title}</h3>
             <p>{study.text}</p>
+
+            <div className="journal-heritage-followup">
+              <span className="journal-followup-lead">
+                <Sparkles size={11} /> FOLLOW UP &amp; SHOP HERITAGE PIECES:
+              </span>
+              <div className="journal-garment-pills">
+                {study.garments.map((g) => (
+                  <Link
+                    key={g.slug}
+                    to={`/product/${g.slug}`}
+                    className="journal-garment-pill"
+                    title={`Follow up ${g.garment} (${g.country})`}
+                  >
+                    <span className="journal-pill-badge">{g.badge}</span>
+                    <span className="journal-pill-title">{g.garment}</span>
+                    <ArrowUpRight size={13} className="journal-pill-arrow" />
+                  </Link>
+                ))}
+              </div>
+            </div>
 
             <Link to={`/shop?category=${encodeURIComponent(study.category)}`} className="text-link">
               {study.edit} <ArrowUpRight size={16} />
